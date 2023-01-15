@@ -1,4 +1,8 @@
-#[derive(Copy, Clone, Debug, Eq, Hash, PartialEq)]
+use strum_macros::EnumString;
+use strum;
+
+#[derive(Copy, Clone, Debug, Eq, Hash, PartialEq, EnumString)]
+#[strum(serialize_all = "PascalCase")]
 pub enum Item {
     Bulkhead,
     Foundation,
