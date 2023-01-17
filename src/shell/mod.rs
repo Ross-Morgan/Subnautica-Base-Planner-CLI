@@ -10,7 +10,7 @@ pub fn run_shell() {
     let mut base = Base::new();
 
     loop {
-        let mut main_menu = menus::main_menu(&mut base);
+        let main_menu = menus::main_menu(&mut base);
 
         run(&main_menu);
 
@@ -30,9 +30,6 @@ pub fn run_shell() {
             "add" => {
                 let item = subsection.selection_value("Base Piece").replace(" ", "").to_lowercase();
                 let quantity = subsection.numeric_value("Quantity") as usize;
-                println!("Item: {item:?}");
-                println!("Quantity: {quantity:?}");
-
 
                 // Infallible since all menu items are valid
                 base.add_item(Item::from_str(item.as_str()).unwrap(), quantity);
@@ -53,7 +50,4 @@ pub fn run_shell() {
             _ => (),
         };
     }
-
-
-    println!("{base:?}");
 }
