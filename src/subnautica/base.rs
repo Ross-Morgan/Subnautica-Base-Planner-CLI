@@ -79,9 +79,6 @@ impl Integrity for Base {
 
         let base_integrity = ((negative_integrity  + 10.0)* multiplier) + positive_integrity;
 
-        println!("Base integrity: {base_integrity}");
-        println!("Multiplier: {multiplier}");
-
         base_integrity
      }
 }
