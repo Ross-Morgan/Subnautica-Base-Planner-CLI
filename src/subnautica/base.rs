@@ -5,9 +5,10 @@ use super::{materials::Item, integrity::Integrity};
 
 #[derive(Clone, Debug, Default)]
 pub struct Base {
-    items: HashMap<Item, usize>,
-    depth: u32,
+    pub items: HashMap<Item, usize>,
+    pub depth: u32,
 }
+
 
 impl Base {
     pub fn new() -> Self {
@@ -18,6 +19,13 @@ impl Base {
         self.items.entry(item).and_modify(|c| *c += quantity).or_insert(quantity);
     }
 
+    pub fn remove_item(&mut self, item: Item, quantity: usize) {
+        self.items.entry(item).and_modify(|c| {
+            if quantity > *c { *c = 0; }
+            else { *c -= quantity; }
+        }).or_insert(0);
+    }
+
     pub fn set_depth(&mut self, depth: i64) {
         self.depth = match depth {
             ..=0 => 0,
@@ -26,26 +34,54 @@ impl Base {
         };
     }
 
+    pub fn number_of(&self, item: &Item) -> usize {
+        *self.items.get(item).unwrap_or(&0)
+    }
+
     pub fn get_depth(&self) -> u32 {
         self.depth
+    }
+
+    pub fn get_integrity(&self) -> f64 {
+        Integrity::integrity(self)
     }
 }
 
 impl Integrity for Base {
     fn integrity(&self) -> f64 {
-        let base_integrity = self.items
+        let negative_integrity = self.items
             .iter()
-            .map(|(item, count)| {
-                Integrity::integrity(item) * (*count as f64)
+            .filter_map(|(item, count)| {
+                match item.integrity() {
+                    i if i < 0.0 => Some(i * (*count as f64)),
+                    _ => None
+                }
             })
             .sum::<f64>();
 
-        match self.depth {
+        let positive_integrity = self.items
+            .iter()
+            .filter_map(|(item, count)| {
+                match item.integrity() {
+                    i if i > 0.0 => Some(i * (*count as f64)),
+                    _ => None
+                }
+            })
+            .sum::<f64>();
+
+        let multiplier = match self.depth {
             0 => 0.0,
-            1..=99 => base_integrity,
+            1..=99 => 1.0,
             depth => {
-                base_integrity * ((depth - 100) / 1000) as f64 + 1.0
+                ((depth - 100) / 1000) as f64 + 1.0
             }
-        }
-    }
+        };
+
+        let base_integrity = ((negative_integrity  + 10.0)* multiplier) + positive_integrity;
+
+        println!("Base integrity: {base_integrity}");
+        println!("Multiplier: {multiplier}");
+
+        base_integrity
+     }
 }

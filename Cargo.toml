@@ -7,8 +7,8 @@ edition = "2021"
 
 [dependencies]
 colored = "2.0.0"
+crossterm = "0.25.0"
 lazy_static = "1.4.0"
-menu = "0.3.2"
 strum = "0.24.1"
 strum_macros = "0.24.3"
-text_io = "0.1.12"
+terminal-menu = "2.0.5"
