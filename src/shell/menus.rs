@@ -109,7 +109,7 @@ pub fn depth_menu(base: &mut Base) -> Vec<TerminalMenuItem> {
     vec![
         label(format!("Current Depth: {} metres", base.depth)),
         label(format!("Current Integrity: {:.2}", base.get_integrity())),
-        numeric("Set Depth:", base.depth as f64, Some(1.0), Some(0.0), None),
+        numeric("Set Depth:", f64::from(base.depth), Some(1.0), Some(0.0), None),
         label("----------------"),
         button(format!("{:^16}", "Ok".green())),
         label("----------------"),
