@@ -4,6 +4,6 @@ pub mod gui;
 pub mod shell;
 pub mod subnautica;
 
-pub use gui::run_app;
+pub use gui::app;
 
 const APP_NAME: &str = "Subnautica Base Planner";
