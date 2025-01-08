@@ -7,7 +7,7 @@ use terminal_menu::{mut_menu, run};
 
 use crate::subnautica::prelude::*;
 
-pub fn run_shell() {
+pub fn shell() {
     println!("{}", "Launching Subnautica Base Planner...".bright_green());
     println!(
         "Navigate menus with {}, {} or the {}",
@@ -37,28 +37,30 @@ pub fn run_shell() {
 
         let subsection = mutable_menu.get_submenu(selected_section.as_str());
 
+        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
         match selected_section.as_str() {
             "add" => {
                 let item = subsection
                     .selection_value("Base Piece")
-                    .replace(" ", "")
+                    .replace(' ', "")
                     .to_lowercase();
+
                 let quantity = subsection.numeric_value("Quantity") as usize;
 
                 // Infallible since all menu items are valid
-                base.add_item(Item::from_str(item.as_str()).unwrap(), quantity);
+                base.add_item(Item::from_str(item.as_str()).unwrap_or(Item::Window), quantity);
             }
             "remove" => {
                 let item = subsection
                     .selection_value("Base Piece")
-                    .replace(" ", "")
+                    .replace(' ', "")
                     .to_lowercase();
                 let quantity = subsection.numeric_value("Quantity") as usize;
                 println!("Item: {item:?}");
                 println!("Quantity: {quantity:?}");
 
                 // Infallible since all menu items are valid
-                base.remove_item(Item::from_str(item.as_str()).unwrap(), quantity);
+                base.remove_item(Item::from_str(item.as_str()).unwrap_or(Item::Hatch), quantity);
             }
             "depth" => {
                 let new_depth = subsection.numeric_value("Set Depth:") as u32;
