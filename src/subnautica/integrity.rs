@@ -1,4 +1,5 @@
 use super::materials::Item;
+use super::base::Base;
 
 pub trait Integrity {
     fn integrity(&self) -> f64;
@@ -25,4 +26,40 @@ impl Integrity for Item {
             Item::LargeRoomGlassRoof => -4.0,
         }
     }
+}
+
+impl Integrity for Base {
+    fn integrity(&self) -> f64 {
+        let negative_integrity = self.items
+            .iter()
+            .filter_map(|(item, count)| {
+                match item.integrity() {
+                    i if i < 0.0 => Some(i * (*count as f64)),
+                    _ => None
+                }
+            })
+            .sum::<f64>();
+
+        let positive_integrity = self.items
+            .iter()
+            .filter_map(|(item, count)| {
+                match item.integrity() {
+                    i if i > 0.0 => Some(i * (*count as f64)),
+                    _ => None
+                }
+            })
+            .sum::<f64>();
+
+        let multiplier = match self.depth {
+            0 => 0.0,
+            1..=99 => 1.0,
+            depth => {
+                ((depth - 100) / 1000) as f64 + 1.0
+            }
+        };
+
+        let base_integrity = ((negative_integrity  + 10.0)* multiplier) + positive_integrity;
+
+        base_integrity
+     }
 }

@@ -1,6 +1,7 @@
-pub(self) mod base;
-pub(self) mod integrity;
-pub(self) mod materials;
+pub mod base;
+pub mod integrity;
+pub mod materials;
+pub mod biomes;
 
 pub mod prelude {
     use super::*;

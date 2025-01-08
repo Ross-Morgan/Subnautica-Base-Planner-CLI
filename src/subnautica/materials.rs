@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use strum_macros::{AsRefStr, EnumString, EnumIter};
+use strum::{AsRefStr, EnumString, EnumIter};
 
 #[derive(Copy, Clone, Debug, Eq, Hash, PartialEq, PartialOrd, Ord, AsRefStr, EnumIter, EnumString)]
 #[strum(serialize_all = "lowercase")]

@@ -2,11 +2,15 @@ mod menus;
 
 use std::str::FromStr;
 
+use colored::Colorize;
 use terminal_menu::{mut_menu, run};
 
 use crate::subnautica::prelude::*;
 
 pub fn run_shell() {
+    println!("{}", "Launching Subnautica Base Planner...".bright_green());
+    println!("Navigate menus with {}, {} or the {}", "wasd".purple(), "hjkl".purple(), "arrow keys".purple());
+
     let mut base = Base::new();
 
     loop {
@@ -49,5 +53,7 @@ pub fn run_shell() {
             }
             _ => (),
         };
+
+        println!("{}", "Goodbye :)".bright_green());
     }
 }
