@@ -40,15 +40,11 @@ pub fn run_app() -> eframe::Result<(), eframe::Error> {
 
     let mut images = HashMap::new();
 
-    dbg!("Running Splashscreen");
-
     eframe::run_native(
         crate::APP_NAME,
         splash_options,
         Box::new(|_| Ok(Box::new(SplashScreen::new(splash_biome, &mut images)))),
     )?;
-
-    dbg!("Running Main App");
 
     eframe::run_native(
         crate::APP_NAME,
