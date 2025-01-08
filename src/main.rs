@@ -1,5 +1,5 @@
-use subnautica_base_planner::run_app;
+use subnautica_base_planner::app;
 
 fn main() -> Result<(), eframe::Error> {
-    run_app()
+    app()
 }
