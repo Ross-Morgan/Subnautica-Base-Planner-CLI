@@ -35,8 +35,8 @@ pub enum Biome {
 }
 
 impl Biome {
-    pub fn associated_path(&self) -> PathBuf {
-        let mut cd = std::env::current_dir().expect("Couldn't find current working directory");
+    #[must_use] pub fn associated_path(&self) -> PathBuf {
+        let mut cd = std::env::current_dir().unwrap_or("./".into());
 
         cd.push("assets");
         cd.push("png-backgrounds");
@@ -49,14 +49,14 @@ impl Biome {
         cd
     }
 
-    pub fn into_par_iter() -> impl ParallelIterator<Item = Biome> {
+    #[must_use] pub fn into_par_iter() -> impl ParallelIterator<Item = Biome> {
         //TODO: Put more effort in:
         //TODO: Don't use vec as intermediate
-        //TODO: Directly onstruct parallel iterator
+        //TODO: Directly construct parallel iterator
         Biome::iter().collect::<Vec<Biome>>().into_par_iter()
     }
 
-    pub fn to_label_string(&self) -> String {
+    #[must_use] pub fn to_label_string(&self) -> String {
         self.to_string()
             .chars()
             .fold((String::new(), false), |mut state, c| {
