@@ -2,7 +2,6 @@ use std::collections::HashMap;
 
 use eframe::egui::{self, load::SizedTexture, Image, TextureOptions, ViewportBuilder};
 use egui_extras::install_image_loaders;
-
 use rand::Rng;
 use strum::{EnumCount, IntoEnumIterator};
 
@@ -13,7 +12,7 @@ use super::splash_screen::SplashScreen;
 pub fn run_app() -> eframe::Result<(), eframe::Error> {
     let splash_options = eframe::NativeOptions {
         viewport: ViewportBuilder::default()
-            .with_inner_size([480.0, 270.0])
+            .with_inner_size([960.0, 540.0]) //TODO: Size based off monitor resolution, i.e half height, half width of monitor /
             .with_icon(super::icon::load_icon())
             .with_fullscreen(true)
             .with_maximized(false)
@@ -41,17 +40,26 @@ pub fn run_app() -> eframe::Result<(), eframe::Error> {
 
     let mut images = HashMap::new();
 
+    dbg!("Running Splashscreen");
+
     eframe::run_native(
         crate::APP_NAME,
         splash_options,
-        Box::new(|cc| Ok(Box::new(SplashScreen::new(splash_biome, cc, &mut images)))),
+        Box::new(|_| Ok(Box::new(SplashScreen::new(splash_biome, &mut images)))),
     )?;
+
+    dbg!("Running Main App");
 
     eframe::run_native(
         crate::APP_NAME,
         options,
         Box::new(|cc| {
-            let mut app = super::app::App::default();
+            let mut app = super::app::App {
+                image_handles: HashMap::new(),
+                images: HashMap::new(),
+                current_biome: Biome::NoBiome,
+                is_fullscreen: true,
+            };
 
             install_image_loaders(&cc.egui_ctx);
 
