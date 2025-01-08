@@ -9,7 +9,10 @@ use crate::subnautica::biomes::Biome;
 
 use super::splash_screen::SplashScreen;
 
-pub fn run_app() -> eframe::Result<(), eframe::Error> {
+/// # Errors
+///
+/// Fails if window cannot be created
+pub fn app() -> eframe::Result<(), eframe::Error> {
     let splash_options = eframe::NativeOptions {
         viewport: ViewportBuilder::default()
             .with_inner_size([960.0, 540.0]) //TODO: Size based off monitor resolution, i.e half height, half width of monitor /
@@ -36,7 +39,7 @@ pub fn run_app() -> eframe::Result<(), eframe::Error> {
     };
 
     let n = rand::thread_rng().gen_range(0..Biome::COUNT);
-    let splash_biome = Biome::iter().nth(n - 1).unwrap();
+    let splash_biome = Biome::iter().nth(n - 1).unwrap_or_default();
 
     let mut images = HashMap::new();
 
@@ -60,7 +63,7 @@ pub fn run_app() -> eframe::Result<(), eframe::Error> {
             install_image_loaders(&cc.egui_ctx);
 
             for biome in Biome::iter() {
-                let color_image = images.get(&biome).unwrap();
+                let color_image = &images[&biome];
                 let handle = cc.egui_ctx.load_texture(
                     biome.to_string(),
                     color_image.clone(),
