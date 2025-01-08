@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
-use super::{materials::Item, integrity::Integrity};
-
+use super::{integrity::Integrity, materials::Item};
 
 #[derive(Clone, Debug, Default)]
 pub struct Base {
@@ -9,28 +8,39 @@ pub struct Base {
     pub depth: u32,
 }
 
-
 impl Base {
     pub fn new() -> Self {
         Default::default()
     }
 
     pub fn add_item(&mut self, item: Item, quantity: usize) {
-        self.items.entry(item).and_modify(|c| *c += quantity).or_insert(quantity);
+        self.items
+            .entry(item)
+            .and_modify(|c| *c += quantity)
+            .or_insert(quantity);
     }
 
     pub fn remove_item(&mut self, item: Item, quantity: usize) {
-        self.items.entry(item).and_modify(|c| {
-            if quantity > *c { *c = 0; }
-            else { *c -= quantity; }
-        }).or_insert(0);
+        self.items
+            .entry(item)
+            .and_modify(|c| {
+                if quantity > *c {
+                    *c = 0;
+                } else {
+                    *c -= quantity;
+                }
+            })
+            .or_insert(0);
     }
 
     pub fn set_depth(&mut self, depth: i64) {
         self.depth = match depth {
             ..=0 => 0,
             d if d < std::u32::MAX.into() => d as u32,
-            _ => { println!("Base depth too deep"); return }
+            _ => {
+                println!("Base depth too deep");
+                return;
+            }
         };
     }
 

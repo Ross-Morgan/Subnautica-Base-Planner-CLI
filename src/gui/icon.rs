@@ -1,6 +1,5 @@
 use eframe::egui::IconData;
 
-
 pub(super) fn load_icon() -> IconData {
     // let mut rgba = Vec::new();
     // img.write_to(&mut rgba, image::ImageFormat::Png).expect("Couldn't load icon");
@@ -10,7 +9,11 @@ pub(super) fn load_icon() -> IconData {
         .to_rgba8();
 
     let (width, height) = icon.dimensions();
-    let data = IconData { rgba: icon.into_raw(), width, height };
+    let data = IconData {
+        rgba: icon.into_raw(),
+        width,
+        height,
+    };
 
     data
 }

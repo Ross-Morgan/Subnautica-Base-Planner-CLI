@@ -1,4 +1,7 @@
-use std::{fmt::{Debug, Display}, path::PathBuf};
+use std::{
+    fmt::{Debug, Display},
+    path::PathBuf,
+};
 
 use convert_case::{Case, Casing};
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
@@ -50,14 +53,11 @@ impl Biome {
         //TODO: Put more effort in:
         //TODO: Don't use vec as intermediate
         //TODO: Directly onstruct parallel iterator
-        Biome::iter()
-            .collect::<Vec<Biome>>()
-            .into_par_iter()
+        Biome::iter().collect::<Vec<Biome>>().into_par_iter()
     }
 
     pub fn to_label_string(&self) -> String {
-        self
-            .to_string()
+        self.to_string()
             .chars()
             .fold((String::new(), false), |mut state, c| {
                 if c.is_uppercase() && state.1 {

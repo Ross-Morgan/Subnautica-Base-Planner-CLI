@@ -9,7 +9,12 @@ use crate::subnautica::prelude::*;
 
 pub fn run_shell() {
     println!("{}", "Launching Subnautica Base Planner...".bright_green());
-    println!("Navigate menus with {}, {} or the {}", "wasd".purple(), "hjkl".purple(), "arrow keys".purple());
+    println!(
+        "Navigate menus with {}, {} or the {}",
+        "wasd".purple(),
+        "hjkl".purple(),
+        "arrow keys".purple()
+    );
 
     let mut base = Base::new();
 
@@ -24,7 +29,9 @@ pub fn run_shell() {
             m.selected_item_name().to_string()
         };
 
-        if selected_section  == "exit" { break; }
+        if selected_section == "exit" {
+            break;
+        }
 
         let mut mutable_menu = mut_menu(&main_menu);
 
@@ -32,21 +39,27 @@ pub fn run_shell() {
 
         match selected_section.as_str() {
             "add" => {
-                let item = subsection.selection_value("Base Piece").replace(" ", "").to_lowercase();
+                let item = subsection
+                    .selection_value("Base Piece")
+                    .replace(" ", "")
+                    .to_lowercase();
                 let quantity = subsection.numeric_value("Quantity") as usize;
 
                 // Infallible since all menu items are valid
                 base.add_item(Item::from_str(item.as_str()).unwrap(), quantity);
-            },
+            }
             "remove" => {
-                let item = subsection.selection_value("Base Piece").replace(" ", "").to_lowercase();
+                let item = subsection
+                    .selection_value("Base Piece")
+                    .replace(" ", "")
+                    .to_lowercase();
                 let quantity = subsection.numeric_value("Quantity") as usize;
                 println!("Item: {item:?}");
                 println!("Quantity: {quantity:?}");
 
                 // Infallible since all menu items are valid
                 base.remove_item(Item::from_str(item.as_str()).unwrap(), quantity);
-            },
+            }
             "depth" => {
                 let new_depth = subsection.numeric_value("Set Depth:") as u32;
                 base.depth = new_depth;
