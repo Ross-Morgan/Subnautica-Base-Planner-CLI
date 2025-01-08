@@ -9,7 +9,6 @@ pub(super) fn load_icon() -> IconData {
         .to_rgba8();
 
     let (width, height) = icon.dimensions();
-    
 
     IconData {
         rgba: icon.into_raw(),

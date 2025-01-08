@@ -16,7 +16,9 @@ impl Integrity for Item {
             Item::Reinforcement => 7.0,
             Item::VerticalConnector => -0.5,
             Item::MultipurposeRoom => -1.25,
-            Item::GlassCompartment | Item::WaterFiltrationMachine | Item::MultipurposeRoomGlassRoof => -2.0,
+            Item::GlassCompartment
+            | Item::WaterFiltrationMachine
+            | Item::MultipurposeRoomGlassRoof => -2.0,
             Item::LargeRoom | Item::LargeRoomGlassRoof => -4.0,
         }
     }

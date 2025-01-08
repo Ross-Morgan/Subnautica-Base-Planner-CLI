@@ -6,6 +6,13 @@ use strum::IntoEnumIterator;
 
 use crate::subnautica::biomes::Biome;
 
+const MARGIN: Margin = Margin {
+    left: 0.0,
+    right: 0.0,
+    top: 8.0,
+    bottom: 4.0,
+};
+
 #[derive(Default)]
 pub struct App {
     pub image_handles: HashMap<Biome, TextureHandle>,
@@ -64,7 +71,7 @@ impl eframe::App for App {
                     Layout::centered_and_justified(egui::Direction::LeftToRight),
                     |ui| {
                         Frame::none()
-                            .inner_margin(Margin::symmetric(10.0, 10.0))
+                            .inner_margin(MARGIN) //TODO Upper margin larger, lower same
                             .show(ui, |ui| {
                                 egui::ComboBox::from_label("Select Biome")
                                     .selected_text(self.current_biome.to_label_string().to_string())

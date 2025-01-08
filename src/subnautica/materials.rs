@@ -46,14 +46,17 @@ pub enum Material {
 }
 
 impl Item {
-    #[must_use] pub fn materials(self) -> HashMap<Material, usize> {
+    #[must_use]
+    pub fn materials(self) -> HashMap<Material, usize> {
         match self {
             Item::Bulkhead => {
                 HashMap::from([(Material::Titanium, 3), (Material::SiliconeRubber, 1)])
             }
             Item::Foundation => HashMap::from([(Material::Lead, 2), (Material::Titanium, 2)]),
             Item::GlassCompartment | Item::Window => HashMap::from([(Material::Glass, 2)]),
-            Item::TitaniumCompartment | Item::VerticalConnector => HashMap::from([(Material::Titanium, 2)]),
+            Item::TitaniumCompartment | Item::VerticalConnector => {
+                HashMap::from([(Material::Titanium, 2)])
+            }
             Item::Hatch => HashMap::from([(Material::Titanium, 2), (Material::Quartz, 1)]),
             Item::Moonpool => HashMap::from([
                 (Material::TitaniumIngot, 2),

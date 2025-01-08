@@ -48,7 +48,10 @@ pub fn shell() {
                 let quantity = subsection.numeric_value("Quantity") as usize;
 
                 // Infallible since all menu items are valid
-                base.add_item(Item::from_str(item.as_str()).unwrap_or(Item::Window), quantity);
+                base.add_item(
+                    Item::from_str(item.as_str()).unwrap_or(Item::Window),
+                    quantity,
+                );
             }
             "remove" => {
                 let item = subsection
@@ -60,7 +63,10 @@ pub fn shell() {
                 println!("Quantity: {quantity:?}");
 
                 // Infallible since all menu items are valid
-                base.remove_item(Item::from_str(item.as_str()).unwrap_or(Item::Hatch), quantity);
+                base.remove_item(
+                    Item::from_str(item.as_str()).unwrap_or(Item::Hatch),
+                    quantity,
+                );
             }
             "depth" => {
                 let new_depth = subsection.numeric_value("Set Depth:") as u32;

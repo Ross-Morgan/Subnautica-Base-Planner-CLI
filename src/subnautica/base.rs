@@ -9,7 +9,8 @@ pub struct Base {
 }
 
 impl Base {
-    #[must_use] pub fn new() -> Self {
+    #[must_use]
+    pub fn new() -> Self {
         Self::default()
     }
 
@@ -37,15 +38,18 @@ impl Base {
         self.depth = depth.max(0).unsigned_abs().try_into().unwrap_or(u32::MAX);
     }
 
-    #[must_use] pub fn number_of(&self, item: &Item) -> usize {
+    #[must_use]
+    pub fn number_of(&self, item: &Item) -> usize {
         self.items.get(item).copied().unwrap_or(0)
     }
 
-    #[must_use] pub fn get_depth(&self) -> u32 {
+    #[must_use]
+    pub fn get_depth(&self) -> u32 {
         self.depth
     }
 
-    #[must_use] pub fn get_integrity(&self) -> f64 {
+    #[must_use]
+    pub fn get_integrity(&self) -> f64 {
         Integrity::integrity(self)
     }
 }
