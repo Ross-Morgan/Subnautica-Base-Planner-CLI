@@ -46,14 +46,14 @@ pub enum Material {
 }
 
 impl Item {
-    pub fn materials(self) -> HashMap<Material, usize> {
+    #[must_use] pub fn materials(self) -> HashMap<Material, usize> {
         match self {
             Item::Bulkhead => {
                 HashMap::from([(Material::Titanium, 3), (Material::SiliconeRubber, 1)])
             }
             Item::Foundation => HashMap::from([(Material::Lead, 2), (Material::Titanium, 2)]),
-            Item::GlassCompartment => HashMap::from([(Material::Glass, 2)]),
-            Item::TitaniumCompartment => HashMap::from([(Material::Titanium, 2)]),
+            Item::GlassCompartment | Item::Window => HashMap::from([(Material::Glass, 2)]),
+            Item::TitaniumCompartment | Item::VerticalConnector => HashMap::from([(Material::Titanium, 2)]),
             Item::Hatch => HashMap::from([(Material::Titanium, 2), (Material::Quartz, 1)]),
             Item::Moonpool => HashMap::from([
                 (Material::TitaniumIngot, 2),
@@ -70,13 +70,11 @@ impl Item {
                 (Material::Gold, 1),
                 (Material::TableCoral, 1),
             ]),
-            Item::VerticalConnector => HashMap::from([(Material::Titanium, 2)]),
             Item::WaterFiltrationMachine => HashMap::from([
                 (Material::Titanium, 3),
                 (Material::CopperWire, 1),
                 (Material::Aerogel, 1),
             ]),
-            Item::Window => HashMap::from([(Material::Glass, 2)]),
             Item::MultipurposeRoom => HashMap::from([(Material::Titanium, 6)]),
             Item::MultipurposeRoomGlassRoof => HashMap::from([
                 (Material::EnamledGlass, 2),
