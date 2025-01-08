@@ -36,7 +36,7 @@ impl Base {
     pub fn set_depth(&mut self, depth: i64) {
         self.depth = match depth {
             ..=0 => 0,
-            d if d < std::u32::MAX.into() => d as u32,
+            d if d < i64::MAX => d as u32,
             _ => {
                 println!("Base depth too deep");
                 return;

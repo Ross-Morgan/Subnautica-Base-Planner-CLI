@@ -93,7 +93,7 @@ pub fn list_menu(base: &mut Base) -> Vec<TerminalMenuItem> {
         .iter()
         .filter_map(|(item, c)| match *c {
             0 => None,
-            _ => Some((item.clone(), *c)),
+            _ => Some((*item, *c)),
         })
         .map(|(i, c)| label(format!("{} | {c}", i.as_ref())))
         .collect::<Vec<_>>();

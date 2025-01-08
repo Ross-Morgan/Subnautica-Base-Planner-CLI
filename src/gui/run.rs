@@ -36,7 +36,7 @@ pub fn run_app() -> eframe::Result<(), eframe::Error> {
     };
 
     let n = rand::thread_rng().gen_range(0..Biome::COUNT);
-    let splash_biome = Biome::iter().skip(n - 1).next().unwrap();
+    let splash_biome = Biome::iter().nth(n - 1).unwrap();
 
     let mut images = HashMap::new();
 

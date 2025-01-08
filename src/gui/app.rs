@@ -67,10 +67,7 @@ impl eframe::App for App {
                             .inner_margin(Margin::symmetric(10.0, 10.0))
                             .show(ui, |ui| {
                                 egui::ComboBox::from_label("Select Biome")
-                                    .selected_text(format!(
-                                        "{}",
-                                        self.current_biome.to_label_string()
-                                    ))
+                                    .selected_text(self.current_biome.to_label_string().to_string())
                                     .height(800.0)
                                     .show_ui(ui, |ui| {
                                         for biome in Biome::iter() {

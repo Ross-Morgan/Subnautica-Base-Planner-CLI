@@ -54,8 +54,6 @@ impl Integrity for Base {
             depth => ((depth - 100) / 1000) as f64 + 1.0,
         };
 
-        let base_integrity = ((negative_integrity + 10.0) * multiplier) + positive_integrity;
-
-        base_integrity
+        ((negative_integrity + 10.0) * multiplier) + positive_integrity
     }
 }

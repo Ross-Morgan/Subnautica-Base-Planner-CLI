@@ -37,8 +37,8 @@ impl<'a> eframe::App for SplashScreen<'a> {
                     let rgb = image::open(biome.associated_path())
                         .expect("Couldn't load image (App:run)")
                         .to_rgb8();
-                    let color_image = ColorImage::from_rgb([1920, 1080], &rgb);
-                    color_image
+                    
+                    ColorImage::from_rgb([1920, 1080], &rgb)
                 });
 
                 self.handles.insert(biome, Some(handle));

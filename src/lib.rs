@@ -1,3 +1,5 @@
+#![deny(clippy::pedantic)]
+
 pub mod gui;
 pub mod shell;
 pub mod subnautica;
