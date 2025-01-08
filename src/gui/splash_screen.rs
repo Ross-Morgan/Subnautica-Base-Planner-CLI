@@ -23,7 +23,11 @@ impl<'a> eframe::App for SplashScreen<'a> {
                 .to_rgb8();
 
             let color_image = ColorImage::from_rgb([1920, 1080], &rgb);
-            let handle = ctx.load_texture(self.splash_biome.to_string(), color_image, egui::TextureOptions::LINEAR);
+            let handle = ctx.load_texture(
+                self.splash_biome.to_string(),
+                color_image,
+                egui::TextureOptions::LINEAR,
+            );
             let texture = SizedTexture::new(handle.id(), egui::vec2(1920.0, 1080.0));
             let image = Image::from_texture(texture);
             let splash_image = (handle, image);
@@ -44,7 +48,11 @@ impl<'a> eframe::App for SplashScreen<'a> {
         });
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            self.splash_image.as_ref().unwrap().1.paint_at(ui, ui.ctx().screen_rect());
+            self.splash_image
+                .as_ref()
+                .unwrap()
+                .1
+                .paint_at(ui, ui.ctx().screen_rect());
             self.completed = self.handles.iter().fold(0, |acc, (_, b)| {
                 acc + b.as_ref().map(|j| j.is_finished() as u8).unwrap_or(0)
             });
@@ -68,15 +76,10 @@ impl<'a> eframe::App for SplashScreen<'a> {
                 .insert(biome, handle.take().unwrap().join().expect("Thread failed"));
         }
     }
-
 }
 
 impl<'a> SplashScreen<'a> {
-    pub fn new(
-        splash_biome: Biome,
-        images: &'a mut HashMap<Biome, ColorImage>,
-    ) -> Self {
-
+    pub fn new(splash_biome: Biome, images: &'a mut HashMap<Biome, ColorImage>) -> Self {
         Self {
             completed: 0,
             splash_image: None,

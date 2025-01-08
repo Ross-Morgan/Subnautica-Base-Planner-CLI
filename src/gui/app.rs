@@ -38,7 +38,8 @@ impl eframe::App for App {
                 if ui
                     .add(egui::ImageButton::new(include_image!(
                         "../../assets/yellow-circle.png"
-                    ))).clicked()
+                    )))
+                    .clicked()
                 {
                     self.is_fullscreen = !self.is_fullscreen;
                     ctx.send_viewport_cmd(egui::ViewportCommand::Fullscreen(self.is_fullscreen));
@@ -55,36 +56,42 @@ impl eframe::App for App {
             });
         });
 
-        egui::TopBottomPanel::bottom("bottom_bar").exact_height(50.0).show(ctx, |ui| {
-            ui.allocate_ui_with_layout(
-                egui::vec2(ui.available_width(), 50.0),
-                Layout::centered_and_justified(egui::Direction::LeftToRight),
-                |ui| {
-                    Frame::none()
-                        .inner_margin(Margin::symmetric(10.0, 10.0))
-                        .show(ui, |ui| {
-                            egui::ComboBox::from_label("Select Biome")
-                                .selected_text(format!("{}", self.current_biome.to_label_string()))
-                                .height(800.0)
-                                .show_ui(ui, |ui| {
-                                    for biome in Biome::iter() {
-                                        ui.selectable_value(
-                                            &mut self.current_biome,
-                                            biome,
-                                            biome.to_label_string(),
-                                        );
+        egui::TopBottomPanel::bottom("bottom_bar")
+            .exact_height(50.0)
+            .show(ctx, |ui| {
+                ui.allocate_ui_with_layout(
+                    egui::vec2(ui.available_width(), 50.0),
+                    Layout::centered_and_justified(egui::Direction::LeftToRight),
+                    |ui| {
+                        Frame::none()
+                            .inner_margin(Margin::symmetric(10.0, 10.0))
+                            .show(ui, |ui| {
+                                egui::ComboBox::from_label("Select Biome")
+                                    .selected_text(format!(
+                                        "{}",
+                                        self.current_biome.to_label_string()
+                                    ))
+                                    .height(800.0)
+                                    .show_ui(ui, |ui| {
+                                        for biome in Biome::iter() {
+                                            ui.selectable_value(
+                                                &mut self.current_biome,
+                                                biome,
+                                                biome.to_label_string(),
+                                            );
 
-                                        if biome == Biome::NoBiome { ui.separator(); }
-                                    }
-                                });
-                        })
-                }
-            );
-        });
+                                            if biome == Biome::NoBiome {
+                                                ui.separator();
+                                            }
+                                        }
+                                    });
+                            })
+                    },
+                );
+            });
 
         egui::CentralPanel::default().show(ctx, |ui| {
             self.update_background(ui);
         });
-
     }
 }
