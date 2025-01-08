@@ -9,8 +9,8 @@ pub struct Base {
 }
 
 impl Base {
-    pub fn new() -> Self {
-        Default::default()
+    #[must_use] pub fn new() -> Self {
+        Self::default()
     }
 
     pub fn add_item(&mut self, item: Item, quantity: usize) {
@@ -34,25 +34,18 @@ impl Base {
     }
 
     pub fn set_depth(&mut self, depth: i64) {
-        self.depth = match depth {
-            ..=0 => 0,
-            d if d < i64::MAX => d as u32,
-            _ => {
-                println!("Base depth too deep");
-                return;
-            }
-        };
+        self.depth = depth.max(0).unsigned_abs().try_into().unwrap_or(u32::MAX);
     }
 
-    pub fn number_of(&self, item: &Item) -> usize {
-        *self.items.get(item).unwrap_or(&0)
+    #[must_use] pub fn number_of(&self, item: &Item) -> usize {
+        self.items.get(item).copied().unwrap_or(0)
     }
 
-    pub fn get_depth(&self) -> u32 {
+    #[must_use] pub fn get_depth(&self) -> u32 {
         self.depth
     }
 
-    pub fn get_integrity(&self) -> f64 {
+    #[must_use] pub fn get_integrity(&self) -> f64 {
         Integrity::integrity(self)
     }
 }
