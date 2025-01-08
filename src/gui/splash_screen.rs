@@ -37,7 +37,7 @@ impl<'a> eframe::App for SplashScreen<'a> {
                     let rgb = image::open(biome.associated_path())
                         .expect("Couldn't load image (App:run)")
                         .to_rgb8();
-                    
+
                     ColorImage::from_rgb([1920, 1080], &rgb)
                 });
 
@@ -54,7 +54,7 @@ impl<'a> eframe::App for SplashScreen<'a> {
                 .1
                 .paint_at(ui, ui.ctx().screen_rect());
             self.completed = self.handles.iter().fold(0, |acc, (_, b)| {
-                acc + b.as_ref().map(|j| j.is_finished() as u8).unwrap_or(0)
+                acc + b.as_ref().map_or(0, |j| u8::from(j.is_finished()))
             });
 
             ui.with_layout(
@@ -71,7 +71,7 @@ impl<'a> eframe::App for SplashScreen<'a> {
     }
 
     fn on_exit(&mut self, _gl: Option<&eframe::glow::Context>) {
-        for (&biome, handle) in self.handles.iter_mut() {
+        for (&biome, handle) in &mut self.handles {
             self.images
                 .insert(biome, handle.take().unwrap().join().expect("Thread failed"));
         }
