@@ -10,7 +10,7 @@ const MARGIN: Margin = Margin {
     left: 0.0,
     right: 0.0,
     top: 8.0,
-    bottom: 4.0,
+    bottom: 10.0,
 };
 
 #[derive(Default)]
@@ -71,7 +71,7 @@ impl eframe::App for App {
                     Layout::centered_and_justified(egui::Direction::LeftToRight),
                     |ui| {
                         Frame::none()
-                            .inner_margin(MARGIN) //TODO Upper margin larger, lower same
+                            .inner_margin(MARGIN)
                             .show(ui, |ui| {
                                 egui::ComboBox::from_label("Select Biome")
                                     .selected_text(self.current_biome.to_label_string().to_string())
