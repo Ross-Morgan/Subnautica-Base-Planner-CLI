@@ -53,9 +53,12 @@ impl<'a> eframe::App for SplashScreen<'a> {
                 .unwrap()
                 .1
                 .paint_at(ui, ui.ctx().screen_rect());
-            self.completed = self.handles.iter().fold(0, |acc, (_, b)| {
+
+            let completed = self.handles.iter().fold(0, |acc, (_, b)| {
                 acc + b.as_ref().map_or(0, |j| u8::from(j.is_finished()))
             });
+
+            if completed > self.completed { self.completed += 1; }
 
             ui.with_layout(
                 egui::Layout::centered_and_justified(egui::Direction::BottomUp),
