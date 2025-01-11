@@ -70,26 +70,24 @@ impl eframe::App for App {
                     egui::vec2(ui.available_width(), 50.0),
                     Layout::centered_and_justified(egui::Direction::LeftToRight),
                     |ui| {
-                        Frame::none()
-                            .inner_margin(MARGIN)
-                            .show(ui, |ui| {
-                                egui::ComboBox::from_label("Select Biome")
-                                    .selected_text(self.current_biome.to_label_string().to_string())
-                                    .height(800.0)
-                                    .show_ui(ui, |ui| {
-                                        for biome in Biome::iter() {
-                                            ui.selectable_value(
-                                                &mut self.current_biome,
-                                                biome,
-                                                biome.to_label_string(),
-                                            );
+                        Frame::none().inner_margin(MARGIN).show(ui, |ui| {
+                            egui::ComboBox::from_label("Select Biome")
+                                .selected_text(self.current_biome.to_label_string().to_string())
+                                .height(800.0)
+                                .show_ui(ui, |ui| {
+                                    for biome in Biome::iter() {
+                                        ui.selectable_value(
+                                            &mut self.current_biome,
+                                            biome,
+                                            biome.to_label_string(),
+                                        );
 
-                                            if biome == Biome::NoBiome {
-                                                ui.separator();
-                                            }
+                                        if biome == Biome::NoBiome {
+                                            ui.separator();
                                         }
-                                    });
-                            })
+                                    }
+                                });
+                        })
                     },
                 );
             });

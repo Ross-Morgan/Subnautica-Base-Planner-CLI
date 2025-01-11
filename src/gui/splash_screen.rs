@@ -58,7 +58,9 @@ impl<'a> eframe::App for SplashScreen<'a> {
                 acc + b.as_ref().map_or(0, |j| u8::from(j.is_finished()))
             });
 
-            if completed > self.completed { self.completed += 1; }
+            if completed > self.completed {
+                self.completed += 1;
+            }
 
             ui.with_layout(
                 egui::Layout::centered_and_justified(egui::Direction::BottomUp),
